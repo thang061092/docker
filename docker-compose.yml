@@ -1,0 +1,30 @@
+version: "3"
+services:
+  # Web
+  nginx:
+    build: ./nginx
+    links:
+      - php7
+    volumes:
+      - ../api.invest:/var/www/api.invest
+      # Logs
+      - ./nginx/log:/var/log/nginx
+    ports:
+      - "81:81"
+    networks:
+      - all
+
+  # PHP
+  php7:
+    build: ./php
+    container_name: php7
+    volumes:
+      - ../api.invest:/var/www/api.invest
+      # Logs
+      - ./php/log:/var/log/php
+    networks:
+      - all
+
+networks: 
+  all:
+    driver: bridge
