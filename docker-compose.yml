@@ -1,5 +1,18 @@
 version: "3"
 services:
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: 123456
   # Web
   nginx:
     build: ./nginx
@@ -7,10 +20,12 @@ services:
       - php7
     volumes:
       - ../api.invest:/var/www/api.invest
+      - ../frontend.invest:/var/www/frontend.invest
       # Logs
       - ./nginx/log:/var/log/nginx
     ports:
-      - "81:81"
+      - "85:85"
+      - "86:86"
     networks:
       - all
 
@@ -20,11 +35,12 @@ services:
     container_name: php7
     volumes:
       - ../api.invest:/var/www/api.invest
+      - ../frontend.invest:/var/www/frontend.invest
       # Logs
       - ./php/log:/var/log/php
     networks:
       - all
 
-networks: 
+networks:
   all:
     driver: bridge
