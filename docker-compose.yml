@@ -3,6 +3,10 @@ services:
 
   db:
     image: mysql:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../mysql/data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: 123456
 
@@ -21,11 +25,13 @@ services:
     volumes:
       - ../api.invest:/var/www/api.invest
       - ../frontend.invest:/var/www/frontend.invest
+      - ../rangdong:/var/www/rangdong
       # Logs
       - ./nginx/log:/var/log/nginx
     ports:
       - "85:85"
       - "86:86"
+      - "87:87"
     networks:
       - all
 
@@ -36,6 +42,7 @@ services:
     volumes:
       - ../api.invest:/var/www/api.invest
       - ../frontend.invest:/var/www/frontend.invest
+      - ../rangdong:/var/www/rangdong
       # Logs
       - ./php/log:/var/log/php
     networks:
