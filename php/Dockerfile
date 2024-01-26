@@ -1,15 +1,10 @@
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 
 # Install package
 RUN apt-get update
 RUN apt-get install vim git zip unzip libpng-dev libzip-dev librabbitmq-dev libicu-dev cron -y
 
-# Database
-RUN pecl install mongodb \
-	&& docker-php-ext-enable mongodb
 RUN docker-php-ext-install pdo_mysql zip bcmath gd
-RUN pecl install amqp \
-    && docker-php-ext-enable amqp
 
 # Imap
 RUN apt-get install libkrb5-dev libc-client-dev -y

@@ -23,15 +23,19 @@ services:
     links:
       - php7
     volumes:
-      - ../api.invest:/var/www/api.invest
-      - ../frontend.invest:/var/www/frontend.invest
-      - ../rangdong:/var/www/rangdong
+      - ../api_invest:/var/www/api_invest
+      - ../frontend_invest:/var/www/frontend_invest
+      - ../api-web-invest:/var/www/api-web-invest
+      - ../website_invest:/var/www/website_invest
+      - ../upload_service:/var/www/upload_service
       # Logs
       - ./nginx/log:/var/log/nginx
     ports:
-      - "85:85"
-      - "86:86"
-      - "87:87"
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+      - "8003:8003"
+      - "8004:8004"
     networks:
       - all
 
@@ -40,9 +44,11 @@ services:
     build: ./php
     container_name: php7
     volumes:
-      - ../api.invest:/var/www/api.invest
-      - ../frontend.invest:/var/www/frontend.invest
-      - ../rangdong:/var/www/rangdong
+      - ../api_invest:/var/www/api_invest
+      - ../frontend_invest:/var/www/frontend_invest
+      - ../api-web-invest:/var/www/api-web-invest
+      - ../website_invest:/var/www/website_invest
+      - ../upload_service:/var/www/upload_service
       # Logs
       - ./php/log:/var/log/php
     networks:
