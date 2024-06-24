@@ -1,4 +1,5 @@
 /.idea
 nginx/log
 php/log
+php8/log
 mysql/.idea

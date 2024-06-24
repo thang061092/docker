@@ -22,12 +22,20 @@ services:
     build: ./nginx
     links:
       - php7
+      - php8
     volumes:
       - ../api_invest:/var/www/api_invest
       - ../frontend_invest:/var/www/frontend_invest
       - ../api-web-invest:/var/www/api-web-invest
       - ../website_invest:/var/www/website_invest
       - ../upload_service:/var/www/upload_service
+      - ../web-rent:/var/www/web-rent
+      - ../cms-rent:/var/www/cms-rent
+      - ../api-rent:/var/www/api-rent
+      - ../../Outsource/backend:/var/www/api-gdtg
+      - ../web-boongmart:/var/www/web-boongmart
+      - ../../Story:/var/www/story
+      - ../land.fagi.com:/var/www/land-fagi
       # Logs
       - ./nginx/log:/var/log/nginx
     ports:
@@ -36,10 +44,17 @@ services:
       - "8002:8002"
       - "8003:8003"
       - "8004:8004"
+      - "8005:8005"
+      - "8006:8006"
+      - "8007:8007"
+      - "8008:8008"
+      - "8009:8009"
+      - "8010:8010"
+      - "8011:8011"
     networks:
       - all
 
-  # PHP
+  # PHP7
   php7:
     build: ./php
     container_name: php7
@@ -49,11 +64,35 @@ services:
       - ../api-web-invest:/var/www/api-web-invest
       - ../website_invest:/var/www/website_invest
       - ../upload_service:/var/www/upload_service
+      - ../../Outsource/backend:/var/www/api-gdtg
+      - ../land.fagi.com:/var/www/land-fagi
       # Logs
       - ./php/log:/var/log/php
     networks:
       - all
 
+  # PHP8
+  php8:
+    build: ./php8
+    container_name: php8
+    volumes:
+      - ../web-rent:/var/www/web-rent
+      - ../cms-rent:/var/www/cms-rent
+      - ../api-rent:/var/www/api-rent
+      - ../web-boongmart:/var/www/web-boongmart
+      - ../../Story:/var/www/story
+      # Logs
+      - ./php8/log:/var/log/php8
+    networks:
+      - all
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - all
+     
 networks:
   all:
     driver: bridge
