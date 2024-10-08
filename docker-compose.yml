@@ -2,85 +2,55 @@ version: "3"
 services:
 
   db:
-    image: mysql:latest
+    image: mysql:5.7
     ports:
-      - "3306:3306"
+      - "3366:3306"
     volumes:
       - ../mysql/data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: 123456
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - '8080:80'
-    environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: 123456
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   ports:
+  #     - '8080:80'
+  #   environment:
+  #     PMA_HOST: db
+  #     MYSQL_ROOT_PASSWORD: 123456
   # Web
   nginx:
     build: ./nginx
     links:
-      - php7
-      - php8
+      - php7-wsl
+      - php8-wsl
     volumes:
-      - ../api_invest:/var/www/api_invest
-      - ../frontend_invest:/var/www/frontend_invest
-      - ../api-web-invest:/var/www/api-web-invest
-      - ../website_invest:/var/www/website_invest
-      - ../upload_service:/var/www/upload_service
-      - ../web-rent:/var/www/web-rent
-      - ../cms-rent:/var/www/cms-rent
-      - ../api-rent:/var/www/api-rent
-      - ../../Outsource/backend:/var/www/api-gdtg
-      - ../web-boongmart:/var/www/web-boongmart
-      - ../../Story:/var/www/story
-      - ../land.fagi.com:/var/www/land-fagi
+      - ../xnt-wsl:/var/www/xnt-wsl
+      - ../apos:/var/www/apos
       # Logs
       - ./nginx/log:/var/log/nginx
     ports:
-      - "8000:8000"
-      - "8001:8001"
-      - "8002:8002"
-      - "8003:8003"
-      - "8004:8004"
       - "8005:8005"
-      - "8006:8006"
-      - "8007:8007"
-      - "8008:8008"
-      - "8009:8009"
-      - "8010:8010"
-      - "8011:8011"
+      - "8004:8004"
     networks:
       - all
 
   # PHP7
-  php7:
+  php7-wsl:
     build: ./php
-    container_name: php7
+    container_name: php7-wsl
     volumes:
-      - ../api_invest:/var/www/api_invest
-      - ../frontend_invest:/var/www/frontend_invest
-      - ../api-web-invest:/var/www/api-web-invest
-      - ../website_invest:/var/www/website_invest
-      - ../upload_service:/var/www/upload_service
-      - ../../Outsource/backend:/var/www/api-gdtg
-      - ../land.fagi.com:/var/www/land-fagi
+      - ../apos:/var/www/apos
       # Logs
       - ./php/log:/var/log/php
     networks:
       - all
 
   # PHP8
-  php8:
+  php8-wsl:
     build: ./php8
-    container_name: php8
+    container_name: php8-wsl
     volumes:
-      - ../web-rent:/var/www/web-rent
-      - ../cms-rent:/var/www/cms-rent
-      - ../api-rent:/var/www/api-rent
-      - ../web-boongmart:/var/www/web-boongmart
-      - ../../Story:/var/www/story
+      - ../xnt-wsl:/var/www/xnt-wsl
       # Logs
       - ./php8/log:/var/log/php8
     networks:
@@ -89,7 +59,7 @@ services:
   redis:
     image: redis:alpine
     ports:
-      - "6379:6379"
+      - "6378:6379"
     networks:
       - all
      
