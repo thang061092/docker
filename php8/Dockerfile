@@ -6,6 +6,13 @@ RUN apt-get install vim git zip unzip libpng-dev libzip-dev librabbitmq-dev libi
 
 RUN docker-php-ext-install pdo_mysql zip bcmath gd
 
+# Cài đặt Redis
+RUN pecl install redis && docker-php-ext-enable redis
+
+RUN apt-get update && \
+    apt-get install -y supervisor procps && \
+    mkdir -p /var/log/supervisor
+
 # Imap
 RUN apt-get install libkrb5-dev libc-client-dev -y
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl

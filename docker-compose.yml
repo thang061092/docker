@@ -59,10 +59,31 @@ services:
   redis:
     image: redis:alpine
     ports:
-      - "6378:6379"
+      - "6379:6379"
     networks:
       - all
-     
+  
+  queue:
+    build: ./supervisor
+    depends_on:
+      - php8-wsl
+      - redis
+    volumes:
+      - ../xnt-wsl:/var/www/xnt-wsl
+      # Logs
+    environment:
+      - QUEUE_CONNECTION=redis
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DB_CONNECTION=mysql
+      - DB_HOST=host.docker.internal
+      - DB_PORT=3366
+      - DB_DATABASE=aladdin_xnt
+      - DB_USERNAME=root
+      - DB_PASSWORD=123456
+    networks:
+      - all
+
 networks:
   all:
     driver: bridge
