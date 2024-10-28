@@ -43,6 +43,7 @@ RUN echo "log_errors = On" >> /usr/local/etc/php/php.ini
 RUN echo "log_level = alert" >> /usr/local/etc/php/php.ini
 RUN echo "output_buffering = 4096" >> /usr/local/etc/php/php.ini
 RUN echo "memory_limit = 4096M" >> /usr/local/etc/php/php.ini
+RUN echo "max_execution_time = 300" >> /usr/local/etc/php/php.ini
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
