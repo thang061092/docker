@@ -26,11 +26,13 @@ services:
     volumes:
       - ../xnt-wsl:/var/www/xnt-wsl
       - ../apos:/var/www/apos
+      - ../socket-laravel:/var/www/socket-laravel
       # Logs
       - ./nginx/log:/var/log/nginx
     ports:
       - "8005:8005"
       - "8004:8004"
+      - "8006:8006"
     networks:
       - all
 
@@ -40,6 +42,7 @@ services:
     container_name: php7-wsl
     volumes:
       - ../apos:/var/www/apos
+      - ../socket-laravel:/var/www/socket-laravel
       # Logs
       - ./php/log:/var/log/php
     networks:
